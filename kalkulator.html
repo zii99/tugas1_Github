@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 6 JS</title>
+</head>
+<body>
+    <div class="calculator">
+        <h1>KALKULATOR</h1>
+        <form action="" id="kalkulator">
+            <div class="isi"></div>
+            <label for="a1">
+                Angka 1 : <input type="text" name="a1" onfocus="kosong1()" /><br/>
+            </label>
+            <label for="a2">
+                Angka 2 : <input type="text" name="a2" onfocus="kosong2()" /> <br/>
+            </label>
+            <label for="hasil">
+                Hasil : <input type="text" name="hasil" value="0" disabled />
+            </label>
+    </div>
+    <div class="tombol">
+        <button type="button" name="tambah" onclick="hitung('tambah')">+</button>
+        <button type="button" name="kurang" onclick="hitung('kurang')">-</button>
+        <button type="button" name="bagi" onclick="hitung('kali')">x</button>
+        <button type="button" name="kali" onclick="hitung('bagi')">/</button>
+        <button type="button" name="pangkat" onclick="hitung('pangkat')">^</button>
+        <button type="button" name="batal" onclick="kosongALL()">Batal</button>
+    </div>
+    <script language="javascript" src="kurs.js"></script>
+</form>
+</body>
+</html>
+
