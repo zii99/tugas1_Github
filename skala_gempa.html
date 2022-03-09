@@ -21,11 +21,11 @@
             document.write(`Lokasi Gempa: ${this.tempat}
             <br/>Skala: ${this.skala}<br/>
             Dampak: Dampak Tidak Terasa <hr/>`);
-          } else if (this.skala > 2 || skala <= 4) {
+          } else if (this.skala > 2 && this.skala <= 4) {
             document.write(`Lokasi Gempa: ${this.tempat}
             <br/>Skala: ${this.skala}
             <br/>Dampak: Bangunan Retak-Retak <hr/>`);
-          } else if (this.skala > 4 || skala <= 6) {
+          } else if (this.skala > 4 && this.skala <= 6) {
             document.write(`Lokasi Gempa: ${this.tempat}
             <br/>Skala: ${this.skala}
             <br/>Dampak: Dampaknya bangunan roboh <hr/>`);
@@ -47,6 +47,7 @@
       let info8 = new gempa("Selandia Baru", 4);
       let info9 = new gempa("Sidney", 5.5);
       let info10 = new gempa("Beajing", 6);
+      
       //menggunakan member class
       info1.dampak();
       info2.dampak();
