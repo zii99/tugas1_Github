@@ -1,0 +1,128 @@
+-- masuk ke ruang DB dbpegawai melalui CMD --
+C:\xampp\mysql\bin>mysql -u root -p dbpegawai
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.4.22-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+-- tampilkan data pegawai yang umurnya paling muda gunakan klausa sub queri --
+MariaDB [dbpegawai]> SELECT nama,umur FROM staff
+    -> WHERE umur = (SELECT MIN(umur) FROM staff);
++---------+------+
+| nama    | umur |
++---------+------+
+| Jasmine |   19 |
+| Hani    |   19 |
++---------+------+
+2 rows in set (0.000 sec)
+
+-- tampilkan data pegawai yang paling gemuk gunakan klausa sub queri --
+MariaDB [dbpegawai]> SELECT nama,berat_badan FROM staff
+    -> WHERE berat_badan = (SELECT MAX(berat_badan) FROM staff);
++---------+-------------+
+| nama    | berat_badan |
++---------+-------------+
+| Derren  |          70 |
+| Wangsit |          70 |
+| Rayhan  |          70 |
++---------+-------------+
+3 rows in set (0.000 sec)
+
+-- cari data pegawai yang berawalan namanya muhammad gunakan klausa like --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nama like 'muhammad%';
++----+-------+-------------------------+---------------+------+-------------+-------------+
+| id | nip   | nama                    | jenis_kelamin | umur | berat_badan | foto        |
++----+-------+-------------------------+---------------+------+-------------+-------------+
+| 19 | 11031 | Muhammad Fikri Nasruloh | L             |   33 |          65 | fikri.png   |
+| 20 | 11032 | Muhammad Santoso        | L             |   45 |          75 | santoso.png |
+| 21 | 11033 | Muhammad Asep Al bahri  | L             |   25 |          70 | asep.png    |
++----+-------+-------------------------+---------------+------+-------------+-------------+
+3 rows in set (0.001 sec)
+
+-- cari data pegawai yang berakhiran namanya santoso gunakan klausa like --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nama like '%santoso';
++----+-------+------------------+---------------+------+-------------+-------------+
+| id | nip   | nama             | jenis_kelamin | umur | berat_badan | foto        |
++----+-------+------------------+---------------+------+-------------+-------------+
+| 20 | 11032 | Muhammad Santoso | L             |   45 |          75 | santoso.png |
++----+-------+------------------+---------------+------+-------------+-------------+
+1 row in set (0.001 sec)
+
+-- cari data pegawai yang berinisial asep gunakan klausa like --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nama like '%asep%';
++----+-------+------------------------+---------------+------+-------------+----------+
+| id | nip   | nama                   | jenis_kelamin | umur | berat_badan | foto     |
++----+-------+------------------------+---------------+------+-------------+----------+
+| 21 | 11033 | Muhammad Asep Al bahri | L             |   25 |          70 | asep.png |
++----+-------+------------------------+---------------+------+-------------+----------+
+1 row in set (0.000 sec)
+
+-- cari data pegawai yang huruf ke-5 nya S gunakan klausa like --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nama like '----s%';
+Empty set (0.000 sec)
+
+-- tampilkan gender pegawai dengan klausa distinct --
+MariaDB [dbpegawai]> SELECT DISTINCT jenis_kelamin FROM staff;
++---------------+
+| jenis_kelamin |
++---------------+
+| P             |
+| L             |
++---------------+
+2 rows in set (0.001 sec)
+
+- dengan klausa case, tampilkan data nama, gender, keterangan:
+
+  jika berat badannya 0 - 40 = kurus
+
+  jika berat badannya 41 - 75 = normal
+
+  jika berat badannya 76 - 80 = gemuk
+
+  jika berat badannya > 80 = obesitas
+
+MariaDB [dbpegawai]> SELECT nama,jenis_kelamin,
+    -> case
+    -> WHEN berat_badan >= 0 AND berat_badan <= 40 THEN 'kurus'
+    -> WHEN berat_badan >= 41 AND berat_badan <= 75 THEN 'normal'
+    -> WHEN berat_badan >= 76 AND berat_badan <= 80 THEN 'gemuk'
+    -> WHEN berat_badan > 80 THEN 'obesitas'
+    -> else ''
+    -> end as keterangan from staff;
++-------------------------+---------------+------------+
+| nama                    | jenis_kelamin | keterangan |
++-------------------------+---------------+------------+
+| Ayu                     | P             | normal     |
+| Jasmine                 | P             | normal     |
+| Derren                  | L             | normal     |
+| Wangsit                 | L             | normal     |
+| Yozi                    | P             | normal     |
+| Fiki                    | L             | normal     |
+| Dika                    | L             | normal     |
+| Hani                    | P             | normal     |
+| Zakiya                  | P             | normal     |
+| Rayhan                  | L             | normal     |
+| Muhammad Fikri Nasruloh | L             | normal     |
+| Muhammad Santoso        | L             | normal     |
+| Muhammad Asep Al bahri  | L             | normal     |
+| Ahmad wikas             | L             | normal     |
++-------------------------+---------------+------------+
+14 rows in set (0.001 sec)
+
+-- hitung jumlah data pegawai berdasarkan gendernya gunakan klausa group by --
+MariaDB [dbpegawai]> SELECT jenis_kelamin,COUNT(*) AS pegawai FROM staff GROUP BY jenis_kelamin;
++---------------+---------+
+| jenis_kelamin | pegawai |
++---------------+---------+
+| L             |       9 |
+| P             |       5 |
++---------------+---------+
+2 rows in set (0.002 sec)
+
+- tampilkan data jumlah pegawai berdasarkan gendernya, jml pegawai >= 10 gunakan klausa having
+MariaDB [dbpegawai]> SELECT jenis_kelamin,COUNT(*) AS pegawai FROM staff GROUP BY jenis_kelamin HAVING COUNT(nama) > 10;
+Empty set (0.000 sec)

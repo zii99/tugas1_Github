@@ -1,0 +1,286 @@
+Microsoft Windows [Version 10.0.19043.1645]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Asus>cd \
+
+C:\>cd xampp\mysql\bin
+
+----------masuk ke ruang DB dbpegawai melalui CMD---------
+C:\xampp\mysql\bin>mysql -u root -p dbpegawai
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 12
+Server version: 10.4.22-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+--------tampilkan tabel yang ada di dbpegawai-----------
+MariaDB [dbpegawai]> show tables
+    -> ;
++---------------------+
+| Tables_in_dbpegawai |
++---------------------+
+| staff               |
++---------------------+
+1 row in set (0.001 sec)
+
+---------tampilkan deskripsi tabel yang ada di dbpegawai----------
+MariaDB [dbpegawai]> DESC staff;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip         | char(5)       | NO   | UNI | NULL    |                |
+| nama        | varchar(30)   | NO   |     | NULL    |                |
+| gender      | enum('L','P') | NO   |     | NULL    |                |
+| umur        | float         | YES  |     | NULL    |                |
+| berat_badan | float         | YES  |     | NULL    |                |
+| foto        | varchar(30)   | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.012 sec)
+
+--------tampilkan seluruh data staff---------
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-------+---------+---------------+------+-------------+--------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto         |
++----+-------+---------+---------------+------+-------------+--------------+
+|  1 | 11021 | Ayu     | P             |   22 |          50 | ayu pict.jpg |
+|  2 | 11022 | Jasmine | P             |   19 |          55 | mine.png     |
+|  3 | 11023 | Derren  | L             |   25 |          70 | derren.png   |
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg  |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg     |
+|  6 | 11026 | Fiki    | L             |   20 |          45 | fiki.png     |
+|  7 | 11027 | Dika    | L             |   20 |          60 | dika.jpg     |
+|  8 | 11028 | Hani    | P             |   19 |          55 | hani.jpg     |
+|  9 | 11029 | Zakiya  | P             |   30 |          55 | Zakiya.jpg   |
+| 10 | 11030 | Rayhan  | L             |   23 |          70 | Array.jpg    |
++----+-------+---------+---------------+------+-------------+--------------+
+10 rows in set (0.000 sec)
+
+--------tampilkan kolom2 tertentu di tabel staff---------
+MariaDB [dbpegawai]> SELECT nama,jenis_kelamin,umur FROM staff;
++---------+---------------+------+
+| nama    | jenis_kelamin | umur |
++---------+---------------+------+
+| Ayu     | P             |   22 |
+| Jasmine | P             |   19 |
+| Derren  | L             |   25 |
+| Wangsit | L             |   24 |
+| Yozi    | P             |   23 |
+| Fiki    | L             |   20 |
+| Dika    | L             |   20 |
+| Hani    | P             |   19 |
+| Zakiya  | P             |   30 |
+| Rayhan  | L             |   23 |
++---------+---------------+------+
+10 rows in set (0.001 sec)
+
+-----------tampilkan baris2 tertentu di tabel staff--------
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE umur < 25;
++----+-------+---------+---------------+------+-------------+--------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto         |
++----+-------+---------+---------------+------+-------------+--------------+
+|  1 | 11021 | Ayu     | P             |   22 |          50 | ayu pict.jpg |
+|  2 | 11022 | Jasmine | P             |   19 |          55 | mine.png     |
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg  |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg     |
+|  6 | 11026 | Fiki    | L             |   20 |          45 | fiki.png     |
+|  7 | 11027 | Dika    | L             |   20 |          60 | dika.jpg     |
+|  8 | 11028 | Hani    | P             |   19 |          55 | hani.jpg     |
+| 10 | 11030 | Rayhan  | L             |   23 |          70 | Array.jpg    |
++----+-------+---------+---------------+------+-------------+--------------+
+8 rows in set (0.001 sec)
+
+---------ampilkan kolom2 dan baris2 tertentu di tabel staff-------
+MariaDB [dbpegawai]> SELECT nama,jenis_kelamin FROM staff WHERE berat_badan > 50;
++---------+---------------+
+| nama    | jenis_kelamin |
++---------+---------------+
+| Jasmine | P             |
+| Derren  | L             |
+| Wangsit | L             |
+| Yozi    | P             |
+| Dika    | L             |
+| Hani    | P             |
+| Zakiya  | P             |
+| Rayhan  | L             |
++---------+---------------+
+8 rows in set (0.000 sec)
+
+ 
+--------tampilkan data pegawai yang umurnya di atas 50 tahun dan berat badannya di atas 90 kg----------
+MariaDB [dbpegawai]> SELECT nama,gender FROM staff
+    -> WHERE umur >= 50 AND berat_badan > 90;
+Empty set (0.001 sec)
+
+-- tampilkan data pegawai dengan klausa key --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nip='11023';
++----+-------+--------+---------------+------+-------------+------------+
+| id | nip   | nama   | jenis_kelamin | umur | berat_badan | foto       |
++----+-------+--------+---------------+------+-------------+------------+
+|  3 | 11023 | Derren | L             |   25 |          70 | derren.png |
++----+-------+--------+---------------+------+-------------+------------+
+1 row in set (0.001 sec)
+
+-- tampilkan data pegawai dengan klausa non key --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE umur = 20;
++----+-------+------+---------------+------+-------------+----------+
+| id | nip   | nama | jenis_kelamin | umur | berat_badan | foto     |
++----+-------+------+---------------+------+-------------+----------+
+|  6 | 11026 | Fiki | L             |   20 |          45 | fiki.png |
+|  7 | 11027 | Dika | L             |   20 |          60 | dika.jpg |
++----+-------+------+---------------+------+-------------+----------+
+2 rows in set (0.001 sec)
+
+-- tampilkan data pegawai dengan klausa in --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nip IN ('11022','11025');
++----+-------+---------+---------------+------+-------------+----------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto     |
++----+-------+---------+---------------+------+-------------+----------+
+|  2 | 11022 | Jasmine | P             |   19 |          55 | mine.png |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg |
++----+-------+---------+---------------+------+-------------+----------+
+2 rows in set (0.001 sec)
+
+-- tampilkan data pegawai dengan klausa not in --
+MariaDB [dbpegawai]> SELECT * FROM staff WHERE nip NOT IN ('11022','11025');
++----+-------+---------+---------------+------+-------------+--------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto         |
++----+-------+---------+---------------+------+-------------+--------------+
+|  1 | 11021 | Ayu     | P             |   22 |          50 | ayu pict.jpg |
+|  3 | 11023 | Derren  | L             |   25 |          70 | derren.png   |
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg  |
+|  6 | 11026 | Fiki    | L             |   20 |          45 | fiki.png     |
+|  7 | 11027 | Dika    | L             |   20 |          60 | dika.jpg     |
+|  8 | 11028 | Hani    | P             |   19 |          55 | hani.jpg     |
+|  9 | 11029 | Zakiya  | P             |   30 |          55 | Zakiya.jpg   |
+| 10 | 11030 | Rayhan  | L             |   23 |          70 | Array.jpg    |
++----+-------+---------+---------------+------+-------------+--------------+
+8 rows in set (0.001 sec)
+
+-- tampilkan data pegawai dari yang umurnya paling tua ke muda --
+MariaDB [dbpegawai]> SELECT * FROM staff ORDER BY umur DESC;
++----+-------+---------+---------------+------+-------------+--------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto         |
++----+-------+---------+---------------+------+-------------+--------------+
+|  9 | 11029 | Zakiya  | P             |   30 |          55 | Zakiya.jpg   |
+|  3 | 11023 | Derren  | L             |   25 |          70 | derren.png   |
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg  |
+| 10 | 11030 | Rayhan  | L             |   23 |          70 | Array.jpg    |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg     |
+|  1 | 11021 | Ayu     | P             |   22 |          50 | ayu pict.jpg |
+|  7 | 11027 | Dika    | L             |   20 |          60 | dika.jpg     |
+|  6 | 11026 | Fiki    | L             |   20 |          45 | fiki.png     |
+|  8 | 11028 | Hani    | P             |   19 |          55 | hani.jpg     |
+|  2 | 11022 | Jasmine | P             |   19 |          55 | mine.png     |
++----+-------+---------+---------------+------+-------------+--------------+
+10 rows in set (0.001 sec)
+
+-- tampilkan data pegawai dari yang berat badan paling kurus ke atas --
+MariaDB [dbpegawai]> SELECT * FROM staff ORDER BY berat_badan DESC;
++----+-------+---------+---------------+------+-------------+--------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto         |
++----+-------+---------+---------------+------+-------------+--------------+
+| 10 | 11030 | Rayhan  | L             |   23 |          70 | Array.jpg    |
+|  3 | 11023 | Derren  | L             |   25 |          70 | derren.png   |
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg  |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg     |
+|  7 | 11027 | Dika    | L             |   20 |          60 | dika.jpg     |
+|  2 | 11022 | Jasmine | P             |   19 |          55 | mine.png     |
+|  9 | 11029 | Zakiya  | P             |   30 |          55 | Zakiya.jpg   |
+|  8 | 11028 | Hani    | P             |   19 |          55 | hani.jpg     |
+|  1 | 11021 | Ayu     | P             |   22 |          50 | ayu pict.jpg |
+|  6 | 11026 | Fiki    | L             |   20 |          45 | fiki.png     |
++----+-------+---------+---------------+------+-------------+--------------+
+10 rows in set (0.001 sec)
+
+-- tampilkan data 5 pegawai teratas gunakan klausa limit --
+MariaDB [dbpegawai]> SELECT * FROM staff LIMIT 5;
++----+-------+---------+---------------+------+-------------+--------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto         |
++----+-------+---------+---------------+------+-------------+--------------+
+|  1 | 11021 | Ayu     | P             |   22 |          50 | ayu pict.jpg |
+|  2 | 11022 | Jasmine | P             |   19 |          55 | mine.png     |
+|  3 | 11023 | Derren  | L             |   25 |          70 | derren.png   |
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg  |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg     |
++----+-------+---------+---------------+------+-------------+--------------+
+5 rows in set (0.000 sec)
+
+-- tampilkan data 5 pegawai terbawah gunakan klausa limit offset --
+MariaDB [dbpegawai]> SELECT * FROM staff LIMIT 5 OFFSET 3;
++----+-------+---------+---------------+------+-------------+-------------+
+| id | nip   | nama    | jenis_kelamin | umur | berat_badan | foto        |
++----+-------+---------+---------------+------+-------------+-------------+
+|  4 | 11024 | Wangsit | L             |   24 |          70 | wangsit.jpg |
+|  5 | 11025 | Yozi    | P             |   23 |          61 | yozi.jpg    |
+|  6 | 11026 | Fiki    | L             |   20 |          45 | fiki.png    |
+|  7 | 11027 | Dika    | L             |   20 |          60 | dika.jpg    |
+|  8 | 11028 | Hani    | P             |   19 |          55 | hani.jpg    |
++----+-------+---------+---------------+------+-------------+-------------+
+5 rows in set (0.000 sec)
+
+-- tampilkan jumlah pegawai gunakan fungsi aggregrat count --
+MariaDB [dbpegawai]> SELECT COUNT(*) AS jumlah_pegawai FROM staff;
++----------------+
+| jumlah_pegawai |
++----------------+
+|             10 |
++----------------+
+1 row in set (0.002 sec)
+
+-- tampilkan nama pegawai, umur yg paling tua gunakan fungsi aggregrat max --
+MariaDB [dbpegawai]> SELECT nama, MAX(umur) AS umur_tertua FROM staff;
++------+-------------+
+| nama | umur_tertua |
++------+-------------+
+| Ayu  |          30 |
++------+-------------+
+1 row in set (0.000 sec)
+
+-- tampilkan nama pegawai, yg paling kurus gunakan fungsi aggregrat min --
+ariaDB [dbpegawai]> SELECT nama, MIN(berat_badan) AS berat_terendah FROM staff;
++------+----------------+
+| nama | berat_terendah |
++------+----------------+
+| Ayu  |             45 |
++------+----------------+
+1 row in set (0.000 sec)
+
+-- tampilkan data rata2 umur pegawai gunakan fungsi aggregrat avg --
+MariaDB [dbpegawai]> SELECT AVG(umur) AS umur_ratarata FROM staff;
++---------------+
+| umur_ratarata |
++---------------+
+|          22.5 |
++---------------+
+1 row in set (0.000 sec)
+
+-- tampilkan jumlah data pegawai yang laki2 gunakan fungsi aggregrat count --
+MariaDB [dbpegawai]> SELECT COUNT(*) AS jumlah_pegawai FROM staff WHERE jenis_kelamin='L';
++----------------+
+| jumlah_pegawai |
++----------------+
+|              5 |
++----------------+
+1 row in set (0.001 sec)
+
+-- tampilkan jumlah data pegawai yang perempuan gunakan fungsi aggregrat count --
+MariaDB [dbpegawai]> SELECT COUNT(*) AS jumlah_pegawai FROM staff WHERE jenis_kelamin='P';
++----------------+
+| jumlah_pegawai |
++----------------+
+|              5 |
++----------------+
+1 row in set (0.000 sec)
+
+-- tampilkan total berat badan seluruh pegawai gunakan fungsi aggregrat sum --
+MariaDB [dbpegawai]> SELECT SUM(berat_badan) AS total_beratbdan FROM staff;
++-----------------+
+| total_beratbdan |
++-----------------+
+|             591 |
++-----------------+
+1 row in set (0.001 sec)

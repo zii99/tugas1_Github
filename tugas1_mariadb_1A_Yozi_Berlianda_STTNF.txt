@@ -1,0 +1,76 @@
+Microsoft Windows [Version 10.0.19043.1586]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Asus>cd \
+
+C:\>cd xampp\mysql\bin
+
+-- Perintah masuk ke ruang DB melalui CMD --
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.22-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+-- Perintah tampilkan database yang sudah dibuat--
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.027 sec)
+
+-- Perintah buat database baru : dbpegawai --
+MariaDB [(none)]> CREATE DATABASE dbpegawai;
+Query OK, 1 row affected (0.003 sec)
+
+-- Perintah masuk ke ruang database dbpegawai --
+MariaDB [(none)]> USE dbpegawai
+Database changed
+
+-- Perintah tampilkan tabel2 yang sudah ada di dbpegawai --
+MariaDB [dbpegawai]> SHOW TABLES;
+Empty set (0.001 sec)
+
+-- Perintah buat tabel pegawai --
+MariaDB [dbpegawai]> CREATE TABLE pegawai (
+    -> id int primary key auto_increment, -- id int primary key --
+    -> nip char(5) not null unique, -- nip char dengan constraint: wajib diisi, tidak boleh sama & 5 karakter --
+    -> nama varchar(30) not null, -- nama varchar dengan constraint: wajib diisi dan maksimal 30 karakter --
+    -> gender enum('L','P') not null, -- gender enum('L','P') dengan constraint: wajib diisi --
+    -> umur int not null, -- umur int dengan constraint: wajib diisi --
+    -> berat_badan float); -- berat_badan float --
+Query OK, 0 rows affected (0.040 sec)
+
+-- Perintah tampilkan database yang sudah dibuat --
+MariaDB [dbpegawai]> SHOW TABLES;
++---------------------+
+| Tables_in_dbpegawai |
++---------------------+
+| pegawai             |
++---------------------+
+1 row in set (0.001 sec)
+
+-- Perintah lihat deskripsi tabel pegawai yang sudah dibuat --
+MariaDB [dbpegawai]> DESC pegawai;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip         | char(5)       | NO   | UNI | NULL    |                |
+| nama        | varchar(30)   | NO   |     | NULL    |                |
+| gender      | enum('L','P') | NO   |     | NULL    |                |
+| umur        | int(11)       | NO   |     | NULL    |                |
+| berat_badan | float         | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.020 sec)

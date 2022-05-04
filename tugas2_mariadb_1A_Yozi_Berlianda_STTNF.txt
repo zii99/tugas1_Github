@@ -1,0 +1,225 @@
+Microsoft Windows [Version 10.0.19043.1645]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Asus>cd \
+
+C:\>cd xampp\mysql\bin
+----------- masuk ke ruang dbpegawai melalui CMD -----------------
+C:\xampp\mysql\bin>mysql -u root -p dbpegawai
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.4.22-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+------------tampilkan deskripsi tabel pegawai---------------
+MariaDB [dbpegawai]> SHOW TABLES;
++---------------------+
+| Tables_in_dbpegawai |
++---------------------+
+| pegawai             |
++---------------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbpegawai]> DESCRIBE pegawai;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip         | char(5)       | NO   | UNI | NULL    |                |
+| nama        | varchar(30)   | NO   |     | NULL    |                |
+| gender      | enum('L','P') | NO   |     | NULL    |                |
+| umur        | int(11)       | NO   |     | NULL    |                |
+| berat_badan | float         | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.042 sec)
+
+----------tambah kolom baru setelah berat_badan: foto varchar(30) tidak wajib diisi--------
+MariaDB [dbpegawai]> ALTER TABLE pegawai ADD COLUMN
+    -> foto varchar(30);
+Query OK, 0 rows affected (0.020 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbpegawai]> DESCRIBE pegawai;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip         | char(5)       | NO   | UNI | NULL    |                |
+| nama        | varchar(30)   | NO   |     | NULL    |                |
+| gender      | enum('L','P') | NO   |     | NULL    |                |
+| umur        | int(11)       | NO   |     | NULL    |                |
+| berat_badan | float         | YES  |     | NULL    |                |
+| foto        | varchar(30)   | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.034 sec)
+
+------------ubah tipe data umur dari int ke float--------------
+MariaDB [dbpegawai]> ALTER TABLE pegawai MODIFY umur FLOAT;
+Query OK, 0 rows affected (0.088 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbpegawai]> DESCRIBE pegawai;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nip         | char(5)       | NO   | UNI | NULL    |                |
+| nama        | varchar(30)   | NO   |     | NULL    |                |
+| gender      | enum('L','P') | NO   |     | NULL    |                |
+| umur        | float         | YES  |     | NULL    |                |
+| berat_badan | float         | YES  |     | NULL    |                |
+| foto        | varchar(30)   | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.020 sec)
+
+MariaDB [dbpegawai]> alter table pegawai RENAME TO staff;
+Query OK, 0 rows affected (0.041 sec)
+----------------ubah nama tabel pegawai menjadi staff----------------
+MariaDB [dbpegawai]> SHOW TABLES;
++---------------------+
+| Tables_in_dbpegawai |
++---------------------+
+| staff               |
++---------------------+
+1 row in set (0.001 sec)
+
+------------------ input tabel staff tanpa menyebutkan kolom2nya sebanyak 5 staff.----------------
+MariaDB [dbpegawai]> INSERT INTO staff VALUES
+    -> ('',001,'Ayu','P',22,'50 kg','ayu pict.jpg'),
+    -> ('',002,'Jasmine','P',19,'55 kg',''),
+    -> ('',003,'Derren','L',25,'70 kg',''),
+    -> ('',004,'Wangsit','L',24,'70 kg','wangsit.jpg'),
+    -> ('',005,'Yozi','P',23,'61 kg','yozi.jpg');
+Query OK, 5 rows affected, 10 warnings (0.005 sec)
+Records: 5  Duplicates: 0  Warnings: 10
+
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-----+---------+--------+------+-------------+--------------+
+| id | nip | nama    | gender | umur | berat_badan | foto         |
++----+-----+---------+--------+------+-------------+--------------+
+|  1 | 1   | Ayu     | P      |   22 |          50 | ayu pict.jpg |
+|  2 | 2   | Jasmine | P      |   19 |          55 |              |
+|  3 | 3   | Derren  | L      |   25 |          70 |              |
+|  4 | 4   | Wangsit | L      |   24 |          70 | wangsit.jpg  |
+|  5 | 5   | Yozi    | P      |   23 |          61 | yozi.jpg     |
++----+-----+---------+--------+------+-------------+--------------+
+5 rows in set (0.000 sec)
+
+---------input tabel staff dengan menyebutkan kolom2nya sebanyak 5 staff-----------
+MariaDB [dbpegawai]> INSERT INTO staff (nip,nama,gender,umur,berat_badan,foto) VALUES
+    -> (006,'Fiki','L',20,'45 kg','fiki.png'),
+    -> (007,'Dika','L',20,'60 kg','dika.jpg'),
+    -> (008,'Hani','P',19,'55 kg','hani.jpg'),
+    -> (009,'Zakiya','P',30,'55 kg','Zakiya.jpg'),
+    -> (010,'Rayhan','L',23,'70 kg','Array.jpg');
+Query OK, 5 rows affected, 5 warnings (0.002 sec)
+Records: 5  Duplicates: 0  Warnings: 5
+
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-----+---------+--------+------+-------------+--------------+
+| id | nip | nama    | gender | umur | berat_badan | foto         |
++----+-----+---------+--------+------+-------------+--------------+
+|  1 | 1   | Ayu     | P      |   22 |          50 | ayu pict.jpg |
+|  2 | 2   | Jasmine | P      |   19 |          55 |              |
+|  3 | 3   | Derren  | L      |   25 |          70 |              |
+|  4 | 4   | Wangsit | L      |   24 |          70 | wangsit.jpg  |
+|  5 | 5   | Yozi    | P      |   23 |          61 | yozi.jpg     |
+|  6 | 6   | Fiki    | L      |   20 |          45 | fiki.png     |
+|  7 | 7   | Dika    | L      |   20 |          60 | dika.jpg     |
+|  8 | 8   | Hani    | P      |   19 |          55 | hani.jpg     |
+|  9 | 9   | Zakiya  | P      |   30 |          55 | Zakiya.jpg   |
+| 10 | 10  | Rayhan  | L      |   23 |          70 | Array.jpg    |
++----+-----+---------+--------+------+-------------+--------------+
+10 rows in set (0.000 sec)
+
+MariaDB [dbpegawai]> UPDATE staff SET foto = 'mine.png' where id = 2;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE staff SET foto = 'derren.png' where id = 3;
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-----+---------+--------+------+-------------+--------------+
+| id | nip | nama    | gender | umur | berat_badan | foto         |
++----+-----+---------+--------+------+-------------+--------------+
+|  1 | 1   | Ayu     | P      |   22 |          50 | ayu pict.jpg |
+|  2 | 2   | Jasmine | P      |   19 |          55 | mine.png     |
+|  3 | 3   | Derren  | L      |   25 |          70 | derren.png   |
+|  4 | 4   | Wangsit | L      |   24 |          70 | wangsit.jpg  |
+|  5 | 5   | Yozi    | P      |   23 |          61 | yozi.jpg     |
+|  6 | 6   | Fiki    | L      |   20 |          45 | fiki.png     |
+|  7 | 7   | Dika    | L      |   20 |          60 | dika.jpg     |
+|  8 | 8   | Hani    | P      |   19 |          55 | hani.jpg     |
+|  9 | 9   | Zakiya  | P      |   30 |          55 | Zakiya.jpg   |
+| 10 | 10  | Rayhan  | L      |   23 |          70 | Array.jpg    |
++----+-----+---------+--------+------+-------------+--------------+
+10 rows in set (0.000 sec)
+
+MariaDB [dbpegawai]> UPDATE staff SET nama='Intan',gender = 'P',umur =26,berat_badan = 62, foto = 'intan.jpeg';
+Query OK, 10 rows affected (0.002 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+MariaDB [dbpegawai]> UPDATE staff SET nama='Farid',gender = 'L',umur = 19,berat_badan = 80, foto = 'farid.jpeg' WHERE id = 2;
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-----+-------+--------+------+-------------+------------+
+| id | nip | nama  | gender | umur | berat_badan | foto       |
++----+-----+-------+--------+------+-------------+------------+
+|  1 | 1   | Intan | P      |   26 |          62 | intan.jpeg |
+|  2 | 2   | Farid | L      |   19 |          80 | farid.jpeg |
+|  3 | 3   | Intan | P      |   26 |          62 | intan.jpeg |
+|  4 | 4   | Intan | P      |   26 |          62 | intan.jpeg |
+|  5 | 5   | Intan | P      |   26 |          62 | intan.jpeg |
+|  6 | 6   | Intan | P      |   26 |          62 | intan.jpeg |
+|  7 | 7   | Intan | P      |   26 |          62 | intan.jpeg |
+|  8 | 8   | Intan | P      |   26 |          62 | intan.jpeg |
+|  9 | 9   | Intan | P      |   26 |          62 | intan.jpeg |
+| 10 | 10  | Intan | P      |   26 |          62 | intan.jpeg |
++----+-----+-------+--------+------+-------------+------------+
+10 rows in set (0.000 sec)
+
+MariaDB [dbpegawai]> DELETE FROM staff WHERE id = 2;
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-----+-------+--------+------+-------------+------------+
+| id | nip | nama  | gender | umur | berat_badan | foto       |
++----+-----+-------+--------+------+-------------+------------+
+|  1 | 1   | Intan | P      |   26 |          62 | intan.jpeg |
+|  3 | 3   | Intan | P      |   26 |          62 | intan.jpeg |
+|  4 | 4   | Intan | P      |   26 |          62 | intan.jpeg |
+|  5 | 5   | Intan | P      |   26 |          62 | intan.jpeg |
+|  6 | 6   | Intan | P      |   26 |          62 | intan.jpeg |
+|  7 | 7   | Intan | P      |   26 |          62 | intan.jpeg |
+|  8 | 8   | Intan | P      |   26 |          62 | intan.jpeg |
+|  9 | 9   | Intan | P      |   26 |          62 | intan.jpeg |
+| 10 | 10  | Intan | P      |   26 |          62 | intan.jpeg |
++----+-----+-------+--------+------+-------------+------------+
+9 rows in set (0.001 sec)
+
+MariaDB [dbpegawai]> DELETE FROM staff WHERE id = 1;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [dbpegawai]> SELECT * FROM staff;
++----+-----+-------+--------+------+-------------+------------+
+| id | nip | nama  | gender | umur | berat_badan | foto       |
++----+-----+-------+--------+------+-------------+------------+
+|  3 | 3   | Intan | P      |   26 |          62 | intan.jpeg |
+|  4 | 4   | Intan | P      |   26 |          62 | intan.jpeg |
+|  5 | 5   | Intan | P      |   26 |          62 | intan.jpeg |
+|  6 | 6   | Intan | P      |   26 |          62 | intan.jpeg |
+|  7 | 7   | Intan | P      |   26 |          62 | intan.jpeg |
+|  8 | 8   | Intan | P      |   26 |          62 | intan.jpeg |
+|  9 | 9   | Intan | P      |   26 |          62 | intan.jpeg |
+| 10 | 10  | Intan | P      |   26 |          62 | intan.jpeg |
++----+-----+-------+--------+------+-------------+------------+
+8 rows in set (0.000 sec)
+
+MariaDB [dbpegawai]>
