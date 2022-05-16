@@ -1,0 +1,78 @@
+Gunakan CMD atau PHPMyAdmin
+
+1. Buat database kosong bernama: dbpenjadwalan
+
+2. Restore dbpenjadwalan dari database yg diberikan 
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dblibrary          |
+| dbpeg              |
+| dbpegawai          |
+| dbpenjadwalan      |
+| dbtraining         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+10 rows in set (0.001 sec)
+
+MariaDB [(none)]> USE dbpenjadwalan;
+Database changed
+MariaDB [dbpenjadwalan]>
+
+(SUDAH DI RESTORE TAPI CMD TIDAK SENGAJA TERCLOSE SEHINGGA PERINTAHNYA TIDAK TERCOPY)
+
+1. Gunakan database dbpenjadwalan
+USE dbpenjadwalan;
+
+2. buat index di masing-masing tabel (minimal 3 tabel) untuk data yang sering dicari dan tidak unique
+MariaDB [dbpenjadwalan]> CREATE INDEX index_klien ON klien(nama);
+Query OK, 0 rows affected (0.015 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbpenjadwalan]> CREATE INDEX index_pengajar ON pengajar(nama);
+Query OK, 0 rows affected (0.016 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbpenjadwalan]> CREATE INDEX index_profile ON profile(name);
+Query OK, 0 rows affected (0.015 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+3. buat view untuk menampilkan data materi kursus (materi_kursus_v): nama materi dan nama kategori
+CREATE VIEW materi_kursus_v AS
+SELECT materi.nama AS Nama_Materi, kategori.nama AS Nama_Kategori
+FROM materi
+INNER JOIN kategori ON kategori.id = materi.idkategori
+
+4. panggil view: materi_kursus_v
+SELECT * FROM materi_kursus_v
+
+5. buat view untuk menampilkan data training (training_v): tgl mulai, tgl akhir, nama kategori, nama materi kursus, jenis kelas, nama pengajar, klien
+CREATE VIEW training_v AS
+SELECT jadwaltraining.tglMulai, jadwaltraining.tglAkhir, kategori.nama AS Nama.kategori, materi.nama AS Nama_Materi, jeniskelas.nama AS Jenis_Kelas,pengajar.nama AS Pengajar, klien.nama AS Klien
+from jadwaltraining
+INNER JOIN kategori ON ketegori.id = jadwal.idmateri
+INNER JOIN materi ON matweri.id = jadwaltraining.idmateri
+INNER JOIN jeniskelas ON jeniskelas.id = jadwaltraining.idjeniskelas
+INNER JOIN pengajar ON pengajar.id = jadwaltraining.idpengajar
+INNER JOIN klien ON klien.id = jadwaltraining.idklien
+
+6. panggil view: training_v
+SELECT * FROM training_v
+
+7. beri akses ke user mimin untuk mengakses seluruh database & tabel2 di dalamnya
+GRANT ALL PRIVILAGES ON *.* TO mimin@localhost IDENTIFIED BY 'mimin';
+
+8. beri akses ke user budi untuk mengakses 1 database : dbpenjadwalan & tabel2 di dalamnya
+GRANT ALL PRIVILAGES ON dbpenjadwalan.* TO budi@localhost IDENTIFIED BY 'budi';
+
+9. beri akses ke user andi untuk mengakses 1 database : dbpenjadwalan dengan sebagian privileges: SELECT, INSERT
+GRANT SELECT, INSERT ON dbpenjadwalan.* TO andi@localhost INDENTIFIED BY 'andi'
+
+10. Cabut hak akses budi (REVOKE ALL)
+REVOKE ALL ON dbpenjadwalan.* FROM 'budi'@'localhost';  
+
