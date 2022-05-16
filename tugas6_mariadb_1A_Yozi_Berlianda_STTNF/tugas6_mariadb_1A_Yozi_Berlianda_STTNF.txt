@@ -1,0 +1,50 @@
+MariaDB [dbtraining]> INSERT INTO kategori_kursus (id,nama) VALUES
+    -> (110,'Pemrogramana'),
+    -> (111,'Jaringan'),
+    -> (112,'Office'),
+    -> (113,'Desain Grafis');
+Query OK, 4 rows affected (0.002 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [dbtraining]> SELECT * FROM kategori_kursus;
++-----+---------------+
+| id  | nama          |
++-----+---------------+
+| 110 | Pemrogramana  |
+| 111 | Jaringan      |
+| 112 | Office        |
+| 113 | Desain Grafis |
++-----+---------------+
+4 rows in set (0.001 sec)
+
+MariaDB [dbtraining]> SELECT * FROM kursus;
+Empty set (0.000 sec)
+
+MariaDB [dbtraining]> SELECT * FROM kursus;
++-----+------+------+-------------+
+| id  | kode | nama | kategori_id |
++-----+------+------+-------------+
+| 120 | 001  | PHP  |         110 |
++-----+------+------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [dbtraining]> INSERT INTO `kursus` (`id`, `kode`, `nama`, `kategori_id`) VALUES ('121', '002', 'Jaringan', '111');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbtraining]> INSERT INTO `kursus` (`id`, `kode`, `nama`, `kategori_id`) VALUES ('122', '003', 'Offie', '112');
+Query OK, 1 row affected (0.013 sec)
+
+MariaDB [dbtraining]> INSERT INTO `kursus` (`id`, `kode`, `nama`, `kategori_id`) VALUES ('123', '004', 'Desain Grafis', '113');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [dbtraining]> SELECT * FROM kursus;
++-----+------+---------------+-------------+
+| id  | kode | nama          | kategori_id |
++-----+------+---------------+-------------+
+| 120 | 001  | PHP           |         110 |
+| 121 | 002  | Jaringan      |         111 |
+| 122 | 003  | Offie         |         112 |
+| 123 | 004  | Desain Grafis |         113 |
++-----+------+---------------+-------------+
+4 rows in set (0.006 sec)
+
