@@ -1,0 +1,57 @@
+3. input data masing-masing tabel minimal 5 record
+INSERT INTO `produk` (`id`, `kode`, `nama`, `harga`, `stok`) VALUES ('111', '001', 'Mesin Cuci', '150000', '5');
+INSERT INTO `produk` (`id`, `kode`, `nama`, `harga`, `stok`) VALUES ('112', '002', 'Citatos', '10000', '50');
+INSERT INTO `produk` (`id`, `kode`, `nama`, `harga`, `stok`) VALUES ('113', '003', 'Laptop', '4000000', '5');
+INSERT INTO `produk` (`id`, `kode`, `nama`, `harga`, `stok`) VALUES ('114', '004', 'Cocacola', '5000', '100');
+INSERT INTO `produk` (`id`, `kode`, `nama`, `harga`, `stok`) VALUES ('115', '005', 'meja', '200000', '10');
+
+INSERT INTO `kategori_produk` (`id`, `nama`, `produk_id`) VALUES ('121', 'Elektronik', '111');
+INSERT INTO `kategori_produk` (`id`, `nama`, `produk_id`) VALUES ('122', 'Makanan', '112');
+INSERT INTO `kategori_produk` (`id`, `nama`, `produk_id`) VALUES ('123', 'Elektronik', '113'), ('124', 'Minuma', '114');
+INSERT INTO `kategori_produk` (`id`, `nama`, `produk_id`) VALUES ('125', 'Kayu', '115');
+
+INSERT INTO `pelanggan` (`id`, `nama`, `no_hp`) VALUES ('131', 'Yozi Berlianda', '1210083'), ('132', 'Ayu Widya Ningrum', '121034');
+INSERT INTO `pelanggan` (`id`, `nama`, `no_hp`) VALUES ('133', 'Wangsit Hardianto', '1215455'), ('134', 'Jasmine Rifda', '021655'), ('135', 'Derren Dwi Sukrillah', '021569');
+
+INSERT INTO `pesanan` (`id`, `tgl`, `pelanggan_id`, `produk_id`, `jml`, `total_harga`) VALUES ('141', '2022-05-11', '132', '113', '1', '4000000'), ('142', '2022-05-14', '135', '111', '1', '150000'), ('143', '2022-05-20', '134', '112', '5', '50000'), ('144', '2022-05-07', '133', '115', '1', '200000'), ('145', '2022-05-18', '131', '114', '5', '25000');
+
+
+4. buat procedure: inputProduk(), showAllProduk(), showProdukElektronik(id), showProdukFurniture(id)
+CREATE PROCEDURE inputProduk()
+    -> BEGIN
+    -> SELECT * FROM produk;
+    -> END $$
+
+ CREATE PROCEDURE showAllProduk()
+    -> BEGIN
+    -> SELECT * FROM produk;
+    -> END $$
+
+CREATE PROCEDURE showProdukElektronik(id)
+    -> BEGIN
+    -> SELECT produk.kode,produk.nama,kategori_produk.nama AS kategori FROM produk
+    -> INNER JOIN kategori_produk ON kategori_produk.id = produk.idkategori_produk
+    -> END $$
+
+CREATE PROCEDURE showProdukFurniture(id)
+    -> BEGIN
+    -> SELECT produk.kode,produk.nama,kategori_produk.nama AS kategori FROM produk
+    -> INNER JOIN kategori_produk ON kategori_produk.id = produk.idkategori_produk
+    -> END $$
+
+5. buat trigger: kurangiStok() => saat pelanggan memesan produk 
+		normalisasiStok() => saat pelanggan membatalkan pesanan produk
+
+CREATE TRIGGER kurangiStok
+    -> AFTER INSERT ON pemesanan
+    -> FOR EACH ROW
+    -> BEGIN
+    -> UPDATE produk SET stok = stok - NEW.jml WHERE id = NEW.idproduk;
+    -> END$$
+
+CREATE TRIGGER normalisasiStok
+    -> AFTER DELETE ON pemesanan
+    -> FOR EACH ROW
+    -> BEGIN
+    -> UPDATE produk SET stok = stok + OLD.jml WHERE id = OLD.idproduk;
+    -> END$$
