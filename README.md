@@ -1,1 +1,1 @@
-# Yozi Berlianda_STTNF_1A_tugas6_JS
+# Yozi Berlianda_STTNF_1A_tugas1_Mariadb+php
