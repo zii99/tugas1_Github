@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>latihan1 jquery</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+      $("document").ready(function () {
+        $("div.kuda").mouseover(function () {
+          $(this).css({
+            background: "url('img/kuda.jpeg')",
+          });
+        });
+        $("div.kuda").mouseout(function () {
+          $(this).css({
+            background: "pink",
+          });
+        });
+        $("div.kuda").mouseover(function () {
+          $("<audio></audio>").attr({
+            src: "audio/kuda.mp3",
+            volume: 0.4,
+            autoplay: "autoplay",
+          });
+        });
+        $("div.kambing").mouseover(function () {
+          $(this).css({
+            background: "url('img/kambing.jpg')",
+          });
+        });
+        $("div.kambing").mouseout(function () {
+          $(this).css({
+            background: "pink",
+          });
+        });
+        $("div.kambing").mouseover(function () {
+          $("<audio></audio>").attr({
+            src: "audio/kambing.mp3",
+            volume: 0.4,
+            autoplay: "autoplay",
+          });
+        });
+        $("div.babi").mouseover(function () {
+          $(this).css({
+            background: "url('img/babi.jpg')",
+          });
+        });
+        $("div.babi").mouseout(function () {
+          $(this).css({
+            background: "pink",
+          });
+        });
+        $("div.babi").mouseover(function () {
+          $("<audio></audio>").attr({
+            src: "audio/babi.mp3",
+            volume: 0.4,
+            autoplay: "autoplay",
+          });
+        });
+        $("div.sapi").mouseover(function () {
+          $(this).css({
+            background: "url('img/sapi.jpg')",
+          });
+        });
+        $("div.sapi").mouseout(function () {
+          $(this).css({
+            background: "pink",
+          });
+        });
+        $("div.sapi").mouseover(function () {
+          $("<audio></audio>").attr({
+            src: "audio/sapi.mp3",
+            volume: 0.4,
+            autoplay: "autoplay",
+          });
+        });
+        $("document").ready(function () {
+            $(".flip").click(function () {
+                $(".pesan").slideToggle("slow");
+            });
+        });
+      });
+    </script>
+    <style type="text/css">
+      div {
+        background: pink;
+        width: 250px;
+        height: 250px;
+        float: left;
+        margin: 10px;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+      body {
+        margin-left: 10%;
+      }
+
+      .tugas1 {
+        margin-left: 40%;
+      }
+      div.pesan {
+            height: 500px;
+            width: 1000px;
+            display: none;
+        }
+
+        div.pesan,
+        p.flip {
+            margin: 0px;
+            padding: 5px;
+            text-align: center;
+            width: 500px;
+            background: pink;
+            border: 6px ridge palevioletred;
+        }
+    </style>
+  <body>
+    <h1 class="tugas1">TUGAS 1</h1>
+    <div class="kuda">KUDA</div>
+    <div class="kambing">KAMBING</div>
+    <div class="babi">BABI</div>
+    <div class="sapi">SAPI</div>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <h1>TUGAS 2</h1>
+    <div class="pesan">
+        <p>
+            NF COMPUTER adalah bagian dari grup Nurul Fikri yang telah dipercaya oleh masyarakat Indonesia di bidang pendidikan dan peningkatan sumber daya manusia selama lebih dari 24 tahun. Alumni-alumninya telah berkiprah dan diakui kualitas kerja dan integritasnya oleh dunia usaha. NF COMPUTER dirintis sejak tahun 1994 dan merupakan sebuah lembaga di bidang pendidikan dan pelatihan IT (Information Technology). Kami berkomitmen menjadi partner perusahaan Anda dalam mengembangkan kemampuan serta keahlian SDM di bidang IT. Dengan komitmen tersebut, kami mempersiapkan tim pengajar yang professional dan berpengalaman di bidang IT. Di Era Industri 4.0 saat ini, teknologi informasi berkembang sangat cepat, oleh karena itu pengembangan sumber daya manusia di bidang IT menjadi sebuah kebutuhan yang perlu diprioritaskan. NF COMPUTER menjadi jawaban yang tepat atas kebutuhan pengembangan kompetensi IT. Sehingga kami selalu berusaha untuk terus berinovasi terhadap teknologi terbaru.
+        </p>
+    </div>
+    <p class="flip"> Company Profile</p>
+    <div class="pesan">
+        <p>
+            <b>Visi</b><br/>
+        Menjadi institusi pelatihan yang kompeten dan profesional di bidang pendidikan 
+        teknologi informasi dan komunikasi di berbagai wilayah indonesia. <br/>
+        <b>Misi</b><br/>
+        Membangun, memelihara dan mengembangkan institusi pelatihan bisnis berdaya saing tinggi, 
+        berkarakter profesional, kompeten, mengedepankan integritas dan tanggung jawab sosial, 
+        dengan mengembangkan dan menyediakan produk produk pendidikan dan pelatihan teknologi informasi dan komunikasi prima.
+
+
+        </p>
+    </div>
+    <p class="flip">Visi dan Misi</p>
+    <div class="pesan">
+        <p>
+        NF COMPUTER menyelenggarakan Pelatihan dan Pendidikan di bidang Teknologi Informasi dan Komunikasi (IT Training) yang dibagi menjadi lima produk.
+        Pelatihan (training) ini dibagi dalam beberapa kategori produk yaitu :<br/>
+        1. Public Class, merupakan short course bidang TIK (Teknologi Informasi dan Komunikasi) yang berbasis Linux maupun Windows.
+        <br/>
+        2.Exclusive Class, merupakan paket training yang diberikan kepada customer dengan durasi 6-8 jam perhari dengan jumlah peserta minimal 2 orang dan pelaksanaan pelatihannya di NF Computer.
+        <br/>
+        3.In House/In Company Training, yaitu pelatihan TIK yang dikustomisasi untuk kebutuhan perusahaan-perusahaan
+        <br/><br/>
+        Paket bisnis khusus dibagi ke dalam beberapa kategori produk yang dikelola secara profesional oleh NF COMPUTER yaitu :
+        <br/>
+        1. Kerjasama Pendidikan Sekolah, yaitu Divisi khusus pendidikan sekolah dimana NF COMPUTER bekerjasama dalam hal : Kerjasama pembangunan Lab Komputer, Pengajaran Komputer dan kombinasi antara keduanya.
+        <br/>
+        2.Usulan Produk lain: Produk-produk yang menurut lokasi diminati oleh pasar tapi belum ada dalam daftar produk pelatihan dan pendidikan NF COMPUTER, dapat diajukan oleh cabang untuk menjadi produk yang dipertimbangkan sebagai produk dan akan menjadi bagian dari penyelenggaraan pelatiahan dan pendidikan di cabang tersebut pada periode yang dianggap tepat oleh NF COMPUTER.
+        </p>
+    </div>
+    <p class="flip">Deskripsi Bisnis</p>
+  </body>
+</html>
